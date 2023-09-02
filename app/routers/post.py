@@ -11,9 +11,11 @@ router = APIRouter(prefix="/posts", tags=["Posts"])
 def get_posts(
     db: Session = Depends(get_db),
     current_user: int = Depends(oauth2.get_current_user),
+    limit: int = 10,
+    offset: int = 0,
     search: Optional[str] = "",
 ):
-    posts = db.query(models.Post).filter(models.Post.title.contains(search)).all()
+    posts = db.query(models.Post).limit(limit).offset(offset).filter(models.Post.title.contains(search)).all()
     return posts
 
 
