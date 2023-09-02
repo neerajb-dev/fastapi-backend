@@ -15,7 +15,13 @@ def get_posts(
     offset: int = 0,
     search: Optional[str] = "",
 ):
-    posts = db.query(models.Post).limit(limit).offset(offset).filter(models.Post.title.contains(search)).all()
+    posts = (
+        db.query(models.Post)
+        .filter(models.Post.title.contains(search))
+        .limit(limit)
+        .offset(offset)
+        .all()
+    )
     return posts
 
 
